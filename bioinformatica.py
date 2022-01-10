@@ -12,6 +12,8 @@ def average_genes(num_genes, num_bases):
     :param num_genes: numero de genes
     :param num_bases: numero de bases
     :return: num_bases / num_genes
+
+    >>> print(average_genes(120, 1400))
     """
     assert num_genes != 0
     return num_bases / num_genes
@@ -26,6 +28,8 @@ def concat_strings(string1, string2):
     :param string1: cadena 1
     :param string2: cadena 2
     :return: cadena 1 concatenada con la cadena 2
+
+    >>> print(concat_strings("Hola ", "mundo!"))
     """
     return string1 + string2
 
@@ -39,6 +43,10 @@ def replace_thymine_by_uracil(dna):
 
     :param dna: la secuencia de DNA
     :return: la secuencia de DNA cambiando T por U (RNA)
+
+    >>> dna = "ATGTCA"
+    >>> rna = replace_thymine_by_uracil(dna)
+    >>> print(f"DNA: {dna} RNA: {rna}")
     """
     rna = ""
     for i in range(0, len(dna)):
@@ -58,7 +66,11 @@ def reverse_complement(dna):
     Obtiene el complemento de la secuencia inversa
     de DNA (no usa los métodos translate ni maketrans)
     :param dna: la secuencia de DNA
-    :return:
+    :return: la secuencia al revés y remplazando A por T, T por A, G por C y C por G
+
+    >>> dna = "ATGCTA"
+    >>> rc_dna = reverse_complement(dna)
+    >>> print(f"DNA: {dna} reverse and complement: {rc_dna}")
     """
     result = ""
     for i in range(len(dna) - 1, -1, -1):
@@ -84,6 +96,8 @@ def max_two_numbers(num1, num2):
     :param num1: numero 1
     :param num2: numero 2
     :return: el mayor de los dos números
+
+    >>> print(max_two_numbers(9, 8))
     """
     if num1 >= num2:
         return num1
@@ -101,6 +115,11 @@ def sort_three_numbers(num1, num2, num3):
     :param num2: numero 2
     :param num3: numero 3
     :return: los tres números ordenados
+
+    >>> a = 4
+    >>> b = 3
+    >>> c = 8
+    >>> print(sort_three_numbers(a, b, c))
     """
     if num1 > num2:
         temp = num1
@@ -128,6 +147,9 @@ def translate_codon_case(codon):
 
     :param codon: secuencia de 3 bases nitrogenadas (ACGT)
     :return: un carácter indicando el aminoácido correspondiente
+
+    >>> codon = "UGC"
+    >>> print(f"codon: {codon} aminoácido: {translate_codon_case(codon)}")
     """
     if codon[0] == 'U':
         if codon[1] == 'U':
@@ -288,6 +310,9 @@ def translate_codon_hash(codon):
 
     :param codon: secuencia de 3 bases nitrogenadas (ACTG)
     :return: un carácter indicando el aminoácido correspondiente
+
+    >>> codon = "UGU"
+    >>> print(f"codon: {codon} aminoácido: {translate_codon_hash(codon)}")
     """
     dic_translate = {
         "UUU": "F",  # 1
@@ -387,6 +412,9 @@ def translate_codon_regex(codon):
 
     :param codon: secuencia de 3 bases nitrogenadas (ACTG)
     :return: un carácter indicando el aminoácido correspondiente
+
+    >>> codon = "UGA"
+    >>> print(f"codon: {codon} aminoácido: {translate_codon_regex(codon)}")
     """
 
     dic_translate_regex = {
@@ -435,7 +463,11 @@ def distance_hamming(p, q):
 
     :param p: la cadena p
     :param q: la cadena q
-    :return:
+    :return: la distancia hamming entre las dos cadenas
+
+    >>> p = "ATGC"
+    >>> q = "TTGC"
+    >>> print(f"p: {p} q: {q} distance hamming between 'p' and 'q': {distance_hamming(p, q)}")
     """
     k = len(p)
     dist_hamming = 0
@@ -460,6 +492,9 @@ def neighbours_dist1(seq):
     :param seq: la secuencia
     :return: un conjunto con todas las secuencias que tienen una distancia hamming menor o igual que uno con la
              secuencia original
+
+    >>> seq = "ATGC"
+    >>> print(neighbours_dist1(seq))
     """
     result = set()
     result.add(seq)
@@ -489,6 +524,11 @@ def neighbours(seq, d):
     :param d: la distancia hamming máxima
     :return: un conjunto con todas las secuencias quee tienen una distancia hamming menor o igual a la distancia "d"
              con la secuencia original
+
+    >>> seq = "ATGC"
+    >>> dist_hamming = 2
+    >>> print(f"sequence: {seq}, distance hamming: {dist_hamming}, neigbours: ")
+    >>> print(neighbours(seq, distance_hamming()))
     """
     result = set()
     result.add(seq)
@@ -515,6 +555,10 @@ def count_subsequence_in_sequence(mother, daughter):
     :param mother: cadena madre (grande)
     :param daughter: cadena hija o subsecuencia (pequeña)
     :return: el número de apariciones de la cadena hija en la cadena madre
+
+    >>> m = "ATGCATGCATGCATGCATGC"
+    >>> d = "AT"
+    >>> print(f"mother: {m} daughter: {d} repetitions: {count_subsequence_in_sequence(m, d)}")
     """
     assert len(daughter) <= len(mother)
     end = len(mother) - len(daughter) + 1
@@ -538,7 +582,12 @@ def count_most_repeat_kmeros(seq, k):
 
     :param seq: la secuencia
     :param k: el tamaño de la subsecuencia, también llamado "kmero"
-    :return:
+    :return: lista con los k-meros que más se repetien
+
+    >>> m = "ATGCATGCATGCATGCATGC"
+    >>> k = 4
+    >>> print(f"sequence: {m} size of subsequence: {k} kmeros: ")
+    >>> print(count_most_repeat_kmeros(seq, k))
     """
 
     assert k <= len(seq)
@@ -554,7 +603,8 @@ def count_most_repeat_kmeros(seq, k):
     # Por defecto ordena de menor a mayor, con la función reverse obtengo el resultado que busco
     sorted_by_value = dict(reversed(sorted(kmeros.items(), key=lambda item: item[1])))
     # Filtro el diccionario para eliminar las entradas que solo tengan una repeticion
-    filtered_and_sorted = {k: v for k, v in sorted_by_value.items() if v > 1}
+    max_repeats = list(sorted_by_value.values())[0]
+    filtered_and_sorted = {k: v for k, v in sorted_by_value.items() if v > max_repeats}
     return filtered_and_sorted.keys()
 
 
@@ -571,6 +621,11 @@ def search_pattern(pattern, text):
     :param pattern: el patron que se va a buscar en el texto
     :param text: el texto
     :return: una lista con las posiciones iniciales de cada repetición del patron
+
+    >>> p = "ATG"
+    >>> t = "ATGCTGTGAATTAA"
+    >>> print(f"pattern: {p} text: {t} positions: ")
+    >>> print(search_pattern(p, t))
     """
     assert len(pattern) <= len(text)
     end = len(text) - len(pattern) + 1
@@ -597,6 +652,12 @@ def aprox_search_pattern(pattern, text, dist_hamming):
     :param text: el texto donde se busca el patron
     :param dist_hamming: la distancia hamming con la que se calcula si existe ocurrencia o no
     :return: una lista con las posiciones iniciales para cada ocurrencia del patron en el texto
+
+    >>> p = "ATG"
+    >>> t = "ATGCTGTGAATTAA"
+    >>> d = 2
+    >>> print(f"pattern: {p} text: {t} distance hamming: {d} positions: ")
+    >>> print(aprox_search_pattern(p, t, d))
     """
     assert len(pattern) <= len(text)
     end = len(text) - len(pattern) + 1
@@ -622,6 +683,12 @@ def most_repeat_word_with_discrepancies(text, k, d):
     :param k: el tamaño de los kmeros
     :param d: la distancia Hamming máxima
     :return: los kmeros o palabras más frecuentes de un texto, pero teniendo en cuenta discrepancias
+
+    >>> t = "ATGCTGTGAATTAA"
+    >>> k = 3
+    >>> d = 2
+    >>> print(f"text: {t} k: {k} d: {d} most repeat words: ")
+    >>> print(most_repeat_word_with_discrepancies(t, k d))
     """
     # Nos aseguramos que k es menor o igual que la longitud total del texto
     assert k <= len(text)
@@ -637,9 +704,8 @@ def most_repeat_word_with_discrepancies(text, k, d):
         for kmero_aprox in neighbours(kmero, d):
             # Para cada vecino, calculamos el número de ocurrencias "similares"
             # usando la función que calcula la distancia hamming
-            end = len(text) - len(kmero_aprox) + 1
             count = 0
-            for j in range(0, end):
+            for j in range(0, len(text) - len(kmero_aprox) + 1):
                 if distance_hamming(kmero_aprox, text[j:j + len(kmero_aprox)]) <= d:
                     count += 1
             # En el diccionario, guardamos el kmero aproximado y el número de
@@ -650,5 +716,6 @@ def most_repeat_word_with_discrepancies(text, k, d):
     # Por defecto ordena de menor a mayor, con la función reverse obtengo el resultado que busco
     sorted_by_value = dict(reversed(sorted(dic_kmeros_aprox.items(), key=lambda item: item[1])))
     # Filtro el diccionario para eliminar las entradas que solo tengan una repeticion
-    filtered_and_sorted = {k: v for k, v in sorted_by_value.items() if v > 1}
+    max_repeats = list(sorted_by_value.values())[0]
+    filtered_and_sorted = {k: v for k, v in sorted_by_value.items() if v >= max_repeats}
     return filtered_and_sorted.keys()
